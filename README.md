@@ -4,7 +4,7 @@
 |---|---|
 | **Nama** | Ria Melisa |
 | **NIM** | 1247050014 |
-| **Mata Kuliah** | Manajemen Basis Data (Semester V) |
+| **Mata Kuliah** | Manajemen Basis Data |
 | **Dosen** | Wildan Budiawan Z, S.T., M.Kom |
 
 Proyek kontainerisasi **PostgreSQL 15** dan **pgAdmin4** menggunakan Docker Compose, lengkap dengan skema `salam`, tabel `mahasiswas` (PRIMARY KEY, UNIQUE, CHECK), dan tiga user dengan hak akses berbeda.
