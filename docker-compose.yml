@@ -1,0 +1,44 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    platform: linux/amd64
+    container_name: postgres_melisa
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "22014:5432"
+    volumes:
+      - pgdata_melisa:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - net_melisa
+
+  pgadmin:
+    image: dpage/pgadmin4:8.14
+    container_name: pgadmin_melisa
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+    ports:
+      - "44014:80"
+    volumes:
+      - pgadmin_data_melisa:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - net_melisa
+
+volumes:
+  pgdata_melisa:
+  pgadmin_data_melisa:
+
+networks:
+  net_melisa:
